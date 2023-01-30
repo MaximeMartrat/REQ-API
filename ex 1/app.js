@@ -56,3 +56,17 @@ function getCookie(cname){
 }
 
 console.log(getCookie("username"));
+
+function checkCookie(){
+    let username = getCookie("username");
+    if (username != "") {
+        alert("welcome again mister " + username);
+    }
+    else {
+        username = prompt("Please enter your username", "")
+        if(username != "" && username != null){
+            setCookie("username",username, 365);
+        }
+    }
+}
+checkCookie();
