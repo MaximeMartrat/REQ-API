@@ -73,3 +73,38 @@ th{
 .selectedbtn:hover{
     background-color: #F3A847;
 }
+h3{
+    display: none;
+    margin-left: 37.5%;
+    position: absolute;
+    text-align: center;
+    font-size: 30px;
+    padding:15px;
+    border: 2px solid black;
+    width: 400px;
+    color: #F7CA00;
+    background-color: black;
+    border-radius: 15px;
+    opacity: 80%;
+}
+#modal-close{
+    padding: 10px;
+    width:60px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: #F7CA00;
+}
+#modal-close:hover{
+    background-color: #F3A847;
+}
+#resultat{
+    margin-top: 100px;
+    padding-bottom: 20px;
+    width: 400px;
+    margin: auto;
+    text-align: center;
+    color: #F7CA00;
+    font-size: 20px;
+    height:90px;
+    border-radius: 10px;
+}

@@ -8,7 +8,6 @@ else {
     // première utilisation(pas de données dans le localStorage)
     produits = [];
 }
-
 createTable();
 // quand le bouton "Ajouter un produit" est cliqué
 valid.addEventListener("click", function () {
@@ -97,12 +96,23 @@ function createTable() {
             for(j=0; j < produits.length; j++){
                 if(produits[j].ref === pdRef){
                     panier.push(produits[j]);
-                    produits[j].stock --;
-                    produits[j].order ++;
-                    localStorage.setItem("prods", JSON.stringify(produits));
-                    createPanier();
-                    createTable();
-                }// fin du if 
+                    if(produits[j]['stock'] > 0){
+                        produits[j].stock --;
+                        produits[j].order ++;
+                        localStorage.setItem("prods", JSON.stringify(produits));
+                        localStorage.setItem("panier", JSON.stringify(panier));
+                        createPanier();
+                        createTable();
+                        break;
+                    }//fin du if interne
+                    else {
+                        //affichage d'une erreur dans une modale custom
+                        document.querySelector("h3").innerHTML = "Le produit " + produits[j]['nom'] + " n'est plus en stock";
+                        document.querySelector("h3").style.display = "block";
+                        document.body.style.backgroundColor = "grey";
+                        document.querySelector("h3").innerHTML += '<br><button id="modal-close" onclick="modalClose()">OK</button>'
+                    }
+                }// fin du if externe
             }// fin du for interne   
         })// fin du listener
     }// fin du for externe
@@ -119,14 +129,36 @@ function createPanier(){
                         <th>Quantité</th>
                         <th>Total</th>
                     </tr>`;
+    let counter = 0;
+    let total = 0;
+    //recupération de la div pour affichage
     for (i = 0; i < panier.length; i++) {
-        myTab2 += `<tr>`;
-        myTab2 += "<td>~ " + produits[j]["nom"] + " ~</td>"
-        myTab2 += "<td>RF-" + produits[j]["ref"] + "-CE</td>"
-        myTab2 += "<td>" + produits[j]["order"] + "</td>"
-        myTab2 += "<td>" + produits[j]["prix"]*produits[j]["order"] + " €</td>"
-        myTab2 += "</tr>";
+        total = panier[i]["prix"]*panier[i]["order"];
+        //si le produit est deja dans le panier on incrémente la quantité et le total sur la même ligne dans le tableau du panier
+        //sinon on ajoute le produit avec la quantité et le prix total dans le panier 
+        // if(produits[j]["nom"] === panier[i]["nom"]){
+        //     panier[i]["order"]++;
+        //     panier[i]["prix"]*panier[i]["order"];
+        //     counter ++;
+        // } 
+        // else {
+            myTab2 += `<tr>`;
+            myTab2 += "<td>~ " + panier[i]["nom"] + " ~</td>"
+            myTab2 += "<td>RF-" + panier[i]["ref"] + "-CE</td>"
+            myTab2 += "<td>" + panier[i]["order"] + "</td>"
+            myTab2 += "<td>" + total + " €</td>"
+            myTab2 += "</tr>"
+            counter ++;
+        // }//fin du else    
     }// fin du for
     myTab2 += `</table>`;
-    table2.innerHTML = myTab2;               
+    table2.innerHTML = myTab2;
+    //affichage du montant total du panier
+    document.getElementById("resultat").innerHTML = "<br>le montant total de votre commande est de : " + counter * total + " €";
+    document.getElementById("resultat").style.backgroundColor = "black";            
+}
+//fct pour fermer la modale
+function modalClose(){
+    document.querySelector("h3").style.display = "none";
+    document.body.style.backgroundColor = "white";
 }
