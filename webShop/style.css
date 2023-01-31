@@ -56,9 +56,9 @@ th{
     color: #F7CA00;
 }
 
-#table{
+#table, #table2{
     margin: auto;
-    border:2px solid black;
+    border:3px solid black;
     border-collapse: collapse;
 }
 .selectedbtn{

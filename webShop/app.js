@@ -8,6 +8,7 @@ else {
     // première utilisation(pas de données dans le localStorage)
     produits = [];
 }
+
 createTable();
 // quand le bouton "Ajouter un produit" est cliqué
 valid.addEventListener("click", function () {
@@ -54,31 +55,32 @@ function inputsToJson() {
     // recupération des inputs 
     let nom = document.getElementById("nom").value;
     let ref = document.getElementById("ref").value;
-    let prix = parseInt(document.getElementById("prix").value);
+    let prix = parseFloat(document.getElementById("prix").value);
     let stock = parseInt(document.getElementById("stock").value);
+    let order = 0;
     // retourner un prdt en json
     return pdt_json = {
         "nom": nom,
         "ref": ref,
         "prix": prix,
-        "stock": stock
+        "stock": stock,
+        "order": order,
     };
 };// fin de la fct
-
 function createTable() {
     let table = document.getElementById("tableContainer");
     let myTab = `<table id="table">
-            <tr>
-                <th>Nom</th>
-                <th>Référence</th>
-                <th>Prix</th>
-                <th>Quantité</th>
-                <th>Commander</th>
-            </tr>`;
+                    <tr>
+                        <th>Nom</th>
+                        <th>Référence</th>
+                        <th>Prix</th>
+                        <th>Stock</th>
+                        <th>Commander</th>
+                    </tr>`;
     for (i = 0; i < produits.length; i++) {
         myTab += `<tr>`;
-        myTab += "<td>" + produits[i]["nom"] + "</td>"
-        myTab += "<td>" + produits[i]["ref"] + "</td>"
+        myTab += "<td>~ " + produits[i]["nom"] + " ~</td>"
+        myTab += "<td>RF-" + produits[i]["ref"] + "-CE</td>"
         myTab += "<td>" + produits[i]["prix"] + " €</td>"
         myTab += "<td>" + produits[i]["stock"] + "</td>"
         myTab +=`<td><input type="button" value="valider" class="selectedbtn" id=${produits[i]['ref']}></td>`
@@ -86,20 +88,45 @@ function createTable() {
         }// fin du for
     myTab += `</table>`;
     table.innerHTML = myTab;
-    //boucle pour décrémenter les stocks en fct des commandes
+    //boucle pour décrémenter les stocks en fct des commandes et incrémenter le panier
     let cmd = document.getElementsByClassName("selectedbtn");
     for(i=0; i < cmd.length; i++){
-        //listener du bouton de commande
+        //Ecoute du bouton de commande
         cmd[i].addEventListener("click", function(){
             let pdRef= this.id;
             for(j=0; j < produits.length; j++){
                 if(produits[j].ref === pdRef){
                     panier.push(produits[j]);
                     produits[j].stock --;
+                    produits[j].order ++;
                     localStorage.setItem("prods", JSON.stringify(produits));
+                    createPanier();
                     createTable();
                 }// fin du if 
             }// fin du for interne   
         })// fin du listener
     }// fin du for externe
 };// fin de la fct
+//fonction de création du panier
+function createPanier(){
+    //recupération de la div pour affichage
+    let table2 = document.getElementById("panierContainer");
+    //création du tableau
+    let myTab2 = `<table id="table2">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Référence</th>
+                        <th>Quantité</th>
+                        <th>Total</th>
+                    </tr>`;
+    for (i = 0; i < panier.length; i++) {
+        myTab2 += `<tr>`;
+        myTab2 += "<td>~ " + produits[j]["nom"] + " ~</td>"
+        myTab2 += "<td>RF-" + produits[j]["ref"] + "-CE</td>"
+        myTab2 += "<td>" + produits[j]["order"] + "</td>"
+        myTab2 += "<td>" + produits[j]["prix"]*produits[j]["order"] + " €</td>"
+        myTab2 += "</tr>";
+    }// fin du for
+    myTab2 += `</table>`;
+    table2.innerHTML = myTab2;               
+}
