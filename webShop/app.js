@@ -8,11 +8,8 @@ else {
     // première utilisation(pas de données dans le localStorage)
     produits = [];
 }
-// console.log("au départ => ", produits)
-// quand le bouton "Ajouter un produit" est cliqué
-
 createTable();
-
+// quand le bouton "Ajouter un produit" est cliqué
 valid.addEventListener("click", function () {
     // initialisation de l'état
     if (produits.length == 0) {
@@ -20,8 +17,6 @@ valid.addEventListener("click", function () {
         newpdt = inputsToJson();
         // push dans le tableau
         produits.push(newpdt);
-        // affichage pour verification
-        // console.log(produits);
         // stockage dans le localStorage
         localStorage.setItem("prods", JSON.stringify(produits));
     }
@@ -30,13 +25,10 @@ valid.addEventListener("click", function () {
         let counted = 0; // sert de drapeau pour vérifier si la fin du tableau est atteinte 
         // on loope sur les produits
         for (i = 0; i < produits.length; i++) {
-            // console.log("\ndebut de la boucle ... ");
-            // console.log("produit courant : ", produits[i]);
             // si le produit existe déjà on ajoute aux stocks
             if (produits[i]['nom'] == document.getElementById("nom").value
                 &&
                 produits[i]['ref'] == document.getElementById("ref").value) {
-                // console.log("deja dans le magasin !");
                 produits[i]['stock'] += parseInt(document.getElementById("stock").value);
                 localStorage.setItem("prods", JSON.stringify(produits));
             }
@@ -46,14 +38,10 @@ valid.addEventListener("click", function () {
                 counted++;
             }
         }// fin de la loop 
-        // console.log(counted);
         // boucle terminée, cocher le drapeau "counted" (fin atteinte sans trouver d'occurrence de produit)
         if (counted === produits.length) {
-            // console.log("ajoute un nouveau produit ...");
             newpdt = inputsToJson();
             produits.push(newpdt);
-            // afficher pour verification
-            // console.log(produits);
             // stocker dans le localStorage
             localStorage.setItem("prods", JSON.stringify(produits));
         } // fin du if
@@ -88,7 +76,6 @@ function createTable() {
                 <th>Commander</th>
             </tr>`;
     for (i = 0; i < produits.length; i++) {
-    // console.log(produits[i]);
         myTab += `<tr>`;
         myTab += "<td>" + produits[i]["nom"] + "</td>"
         myTab += "<td>" + produits[i]["ref"] + "</td>"
@@ -97,14 +84,14 @@ function createTable() {
         myTab +=`<td><input type="button" value="valider" class="selectedbtn" id=${produits[i]['ref']}></td>`
         myTab += "</tr>";
         }// fin du for
-        myTab += `</table>`;
-        table.innerHTML = myTab;
-    let a = document.getElementsByClassName("selectedbtn");
-    for(i=0; i < a.length; i++){
-        a[i].addEventListener("click", function(){
-            // console.log(this.id)
+    myTab += `</table>`;
+    table.innerHTML = myTab;
+    //boucle pour décrémenter les stocks en fct des commandes
+    let cmd = document.getElementsByClassName("selectedbtn");
+    for(i=0; i < cmd.length; i++){
+        //listener du bouton de commande
+        cmd[i].addEventListener("click", function(){
             let pdRef= this.id;
-            console.log("produit")
             for(j=0; j < produits.length; j++){
                 if(produits[j].ref === pdRef){
                     panier.push(produits[j]);
