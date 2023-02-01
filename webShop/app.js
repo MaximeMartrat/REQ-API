@@ -107,7 +107,7 @@ function createTable() {
                     }//fin du if interne
                     else {
                         //affichage d'une erreur dans une modale custom
-                        document.querySelector("h3").innerHTML = "Le produit " + produits[j]['nom'] + " n'est plus en stock";
+                        document.querySelector("h3").innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + "Le produit " + produits[j]['nom'] + " n'est plus en stock";
                         document.querySelector("h3").style.display = "block";
                         document.body.style.backgroundColor = "grey";
                         document.querySelector("h3").innerHTML += '<br><button id="modal-close" onclick="modalClose()">OK</button>'
@@ -119,6 +119,7 @@ function createTable() {
 };// fin de la fct
 //fonction de création du panier
 function createPanier(){
+    console.log(panier);
     //recupération de la div pour affichage
     let table2 = document.getElementById("panierContainer");
     //création du tableau
@@ -136,7 +137,7 @@ function createPanier(){
         total = panier[i]["prix"]*panier[i]["order"];
         //si le produit est deja dans le panier on incrémente la quantité et le total sur la même ligne dans le tableau du panier
         //sinon on ajoute le produit avec la quantité et le prix total dans le panier 
-        // if(produits[j]["nom"] === panier[i]["nom"]){
+        // if(produits[i]["ref"] === panier[i]["ref"]){
         //     panier[i]["order"]++;
         //     panier[i]["prix"]*panier[i]["order"];
         //     counter ++;
