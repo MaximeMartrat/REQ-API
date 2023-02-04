@@ -1,0 +1,110 @@
+*{
+    padding:0;
+    margin:0;
+}
+body{
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+h1{
+    font-size: 50px;
+    padding: 20px;
+    background-color: black;
+    color:white;
+}
+h1 span{
+    color:white;
+    font-size: 20px;
+}
+.fa-amazon{
+    color:#F7CA00;
+}
+#valid{
+    background-color: #F7CA00;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    font-size: 20px;
+    border:1px solid #F3A847;
+}
+#valid:hover{
+    background-color: #F3A847;
+    cursor: pointer;
+}
+#com input{
+    border-radius: 10px;
+    height:30px;
+    width:200px;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+label{
+    font-size: 20px;
+}
+h2{
+    font-size: 30px;
+}
+th, td {
+    text-align: center;
+    width:200px;
+    height:40px;
+    border:1px solid grey;
+}
+th{
+    background-color: black;
+    color: #F7CA00;
+}
+
+#table, #table2{
+    margin: auto;
+    border:3px solid black;
+    border-collapse: collapse;
+}
+.selectedbtn{
+    width:100%;
+    height:100%;
+    border:1px solid #F3A847;
+    background-color: #F7CA00;
+    font-family: 'Poppins', sans-serif;
+    font-size: 17px;
+    cursor: pointer;
+}
+.selectedbtn:hover{
+    background-color: #F3A847;
+}
+h3{
+    display: none;
+    margin-left: 37.5%;
+    position: absolute;
+    text-align: center;
+    font-size: 30px;
+    padding:15px;
+    border: 2px solid black;
+    width: 400px;
+    color: #F7CA00;
+    background-color: black;
+    border-radius: 15px;
+    opacity: 80%;
+}
+#modal-close{
+    padding: 10px;
+    width:60px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: #F7CA00;
+}
+#modal-close:hover{
+    background-color: #F3A847;
+}
+#resultat{
+    margin-top: 100px;
+    padding-bottom: 20px;
+    width: 400px;
+    margin: auto;
+    text-align: center;
+    color: #F7CA00;
+    font-size: 20px;
+    height:90px;
+    border-radius: 10px;
+}
